@@ -1,5 +1,4 @@
 import {ActionReducer, Action} from '@ngrx/store';
-import {stat} from "fs";
 
 export const INCREMENT = 'INCREMENT';
 export const DECREMENT = 'DECREMENT';
