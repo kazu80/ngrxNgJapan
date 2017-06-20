@@ -5,8 +5,9 @@ const todos        = (state = initialState, action) => {
     switch (action.type) {
         case TodoActions.ADD_TODO:
             return state.concat({
-                text: action.text,
-                id  : 1
+                id       : action.id,
+                text     : action.text,
+                completed: action.completed
             });
 
         case TodoActions.TOGGLE_TODO:
