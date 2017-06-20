@@ -7,7 +7,8 @@ export class TodoActions {
     addTodo(text) {
         return {
             type: ADD_TODO,
-            text: text
+            text: text,
+            id  : 1
         };
     };
 }

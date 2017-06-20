@@ -2,9 +2,22 @@ import {Component} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {Store} from '@ngrx/store';
 import {INCREMENT, DECREMENT, RESET} from './counter';
+import {TodoActions} from './todoActions';
 
 interface AppState {
     counter: number;
+}
+
+// TodosStateが見つからないので色々なinterfaceとClassを作ってみる
+export interface Todo {
+    text: string;
+}
+
+class Bar {
+}
+
+export interface Foo {
+    foo: Number;
 }
 
 @Component({
@@ -13,6 +26,42 @@ interface AppState {
     styleUrls  : ['./app.component.scss']
 })
 export class AppComponent {
+    todos: Observable<Todo>;
+
+    constructor(// private _store: Store<TodosState>,
+                private _store: Store<Todo>,
+                private todoActions: TodoActions,) {
+        this.todos = _store.select('todos');
+
+        console.log(this.todos);
+
+    }
+
+    private addTodo(input) {
+
+        const foo = this.todoActions.addTodo(input.value);
+
+        /*
+         foo = {
+         id: 1,
+         text: 'foo',
+         type: 'ADD_TODO'
+         };
+         console.log(foo);
+         */
+
+        this._store.dispatch(foo);
+        input.value = '';
+    }
+
+    private onTodoClick(id) {
+        console.log(id);
+    }
+
+    /**
+     * ngrx guthub sample
+     **/
+    /*
     counter: Observable<number>;
 
     constructor(private store: Store<AppState>) {
@@ -30,4 +79,5 @@ export class AppComponent {
     reset() {
         this.store.dispatch({type: RESET});
     }
+     */
 }

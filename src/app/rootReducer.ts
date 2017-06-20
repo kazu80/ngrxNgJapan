@@ -1,11 +1,12 @@
 import * as TodoActions from './todoActions';
 
 const initialState = [];
-const todo         = (state = initialState, action) => {
+const todos        = (state = initialState, action) => {
     switch (action.type) {
         case TodoActions.ADD_TODO:
             return state.concat({
                 text: action.text,
+                id  : 1
             });
 
         default:
@@ -13,3 +14,4 @@ const todo         = (state = initialState, action) => {
     }
 };
 
+export const rootReducer = {todos: todos};

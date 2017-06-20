@@ -1,6 +1,23 @@
+<div>
+    <div>
+        <input #todo>
+        <button (click)="addTodo(todo)">Add todo</button>
+    </div>
+    <ul>
+        <li *ngFor="let todo of todos | async" (click)="onTodoClick(todo.id)"
+            [style.textDecoration]="todo.completed ? 'line-through' : 'none'">
+            {{todo.text}}
+        </li>
+    </ul>
+</div>
+
+
+<!-- ngrx guthub sample -->
+<!--
 <button (click)="increment()">Increment</button>
 <div>Current Count: {{ counter | async }}</div>
 <button (click)="decrement()">Decrement</button>
 
 <button (click)="reset()">Reset Counter</button>
+-->
 
