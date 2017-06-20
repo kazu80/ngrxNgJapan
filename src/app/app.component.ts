@@ -29,12 +29,13 @@ export class AppComponent {
     todos: Observable<Todo>;
 
     constructor(// private _store: Store<TodosState>,
-                private _store: Store<Todo>,
-                private todoActions: TodoActions,) {
+        private _store: Store<Todo>,
+        private todoActions: TodoActions) {
         this.todos = _store.select('todos');
+    }
 
-        console.log(this.todos);
-
+    private onTodoClick(id) {
+        this._store.dispatch(this.todoActions.toggleTodo(id));
     }
 
     private addTodo(input) {
@@ -52,10 +53,6 @@ export class AppComponent {
 
         this._store.dispatch(foo);
         input.value = '';
-    }
-
-    private onTodoClick(id) {
-        console.log(id);
     }
 
     /**
