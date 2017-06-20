@@ -5,7 +5,14 @@ import {StoreModule} from '@ngrx/store';
 import {counterReducer} from './counter';
 import {rootReducer} from './rootReducer';
 import {StoreDevtoolsModule} from '@ngrx/store-devtools';
+import {StoreLogMonitorModule, useLogMonitor} from '@ngrx/store-log-monitor';
 import {TodoActions} from './todoActions';
+
+export function instrumentOptions() {
+  return {
+    monitor: useLogMonitor({visible: true, position: 'right'})
+  };
+}
 
 @NgModule({
   declarations: [
@@ -14,7 +21,8 @@ import {TodoActions} from './todoActions';
   imports     : [
     BrowserModule,
     StoreModule.provideStore(rootReducer),
-    StoreDevtoolsModule.instrumentOnlyWithExtension()
+    StoreDevtoolsModule.instrumentStore(instrumentOptions),
+    StoreLogMonitorModule
   ],
   providers   : [TodoActions],
   bootstrap   : [AppComponent]
