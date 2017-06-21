@@ -7,6 +7,7 @@ import {rootReducer} from './rootReducer';
 import {StoreDevtoolsModule} from '@ngrx/store-devtools';
 import {StoreLogMonitorModule, useLogMonitor} from '@ngrx/store-log-monitor';
 import {TodoActions} from './todoActions';
+import {VisibleTodosPipe} from './visibleTodosPipe';
 
 export function instrumentOptions() {
   return {
@@ -16,7 +17,8 @@ export function instrumentOptions() {
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    VisibleTodosPipe
   ],
   imports     : [
     BrowserModule,

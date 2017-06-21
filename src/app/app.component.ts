@@ -1,23 +1,18 @@
-import {Component} from '@angular/core';
+import {Component, OnDestroy} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {Store} from '@ngrx/store';
 import {INCREMENT, DECREMENT, RESET} from './counter';
 import {TodoActions} from './todoActions';
+import {getTodos, TodosState} from './rootReducer';
 
 interface AppState {
     counter: number;
 }
 
-// TodosStateが見つからないので色々なinterfaceとClassを作ってみる
 export interface Todo {
+    id: number;
+    completed: boolean;
     text: string;
-}
-
-class Bar {
-}
-
-export interface Foo {
-    foo: Number;
 }
 
 @Component({
@@ -25,13 +20,17 @@ export interface Foo {
     templateUrl: './app.component.html',
     styleUrls  : ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnDestroy {
+    currentFilter: string;
     todos: Observable<Todo>;
 
-    constructor(// private _store: Store<TodosState>,
-        private _store: Store<Todo>,
-        private todoActions: TodoActions) {
-        this.todos = _store.select('todos');
+    constructor(private _store: Store<TodosState>,
+                private todoActions: TodoActions) {
+        this.todos = _store.let(getTodos);
+    }
+
+    private applyFilter(filter) {
+        this._store.dispatch(this.todoActions.setCurrentFilter(filter));
     }
 
     private onTodoClick(id) {
@@ -53,6 +52,10 @@ export class AppComponent {
 
         this._store.dispatch(foo);
         input.value = '';
+    }
+
+    ngOnDestroy(): void {
+        throw new Error("Method not implemented.");
     }
 
     /**

@@ -25,5 +25,12 @@ export class TodoActions {
             type: TOGGLE_TODO,
             id  : id
         }
+    };
+
+    setCurrentFilter(filter) {
+        return {
+            type  : SET_CURRENT_FILTER,
+            filter: filter
+        }
     }
 }

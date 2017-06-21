@@ -1,4 +1,5 @@
 import * as TodoActions from './todoActions';
+import {Action, ActionReducer, combineReducers} from '@ngrx/store';
 
 const initialState = [];
 const todos        = (state = initialState, action) => {
@@ -32,4 +33,35 @@ function toggleTodo(state, action) {
     });
 }
 
-export const rootReducer = {todos: todos};
+export interface Filter {
+    currentFilter: string;
+}
+
+const currentFilter = (state = 'SHOW_ALL', action) => {
+    switch (action.type) {
+        case TodoActions.SET_CURRENT_FILTER:
+            return action.filter;
+        default:
+            return state;
+    }
+};
+
+export interface Todo {
+    text: string;
+}
+
+export interface TodosState {
+    todos: Todo;
+    currentFilter: Filter;
+}
+
+const combinedReducer: ActionReducer<TodosState> = combineReducers({
+    todos        : todos,
+    currentFilter: currentFilter
+});
+
+export const rootReducer = (state, action) => combinedReducer(state, action);
+
+export const getTodos         = state$ => state$.select(s => s.todos);
+export const getCurrentFilter = state$ => state$.select(s => s.currentFilter);
+

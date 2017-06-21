@@ -4,12 +4,20 @@
         <button (click)="addTodo(todo)">Add todo</button>
     </div>
     <ul>
-        <li *ngFor="let todo of todos | async" (click)="onTodoClick(todo.id)"
+        <li *ngFor="let todo of todos | async | visibleTodos:currentFilter" (click)="onTodoClick(todo.id)"
             [style.textDecoration]="todo.completed ? 'line-through' : 'none'">
             {{todo.text}}
         </li>
     </ul>
+
+    <p>
+        Show:
+        <a href="#" (click)="applyFilter('SHOW_ALL');">All</a>
+        <a href="#" (click)="applyFilter('SHOW_ACTIVE');">Active</a>
+        <a href="#" (click)="applyFilter('SHOW_COMPLETED');">Completed</a>
+    </p>
 </div>
+
 
 <ngrx-store-log-monitor toggleCommand="ctrl-h" positionCommand="ctrl-m"></ngrx-store-log-monitor>
 
